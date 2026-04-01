@@ -12,6 +12,8 @@ header.top-nav {
   font-size: var(--text-lg);
   font-weight: 400;
   letter-spacing: -0.02em;
+  text-decoration: none;
+  color: var(--text-main);
 }
 
 .top-nav nav {
@@ -31,6 +33,11 @@ header.top-nav {
 
 .top-nav nav a:hover {
   opacity: 0.5;
+}
+
+.top-nav nav a.active {
+  border-bottom: 1.5px solid var(--text-main);
+  padding-bottom: 2px;
 }
 
 .top-nav .actions {

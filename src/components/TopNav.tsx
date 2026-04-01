@@ -1,17 +1,31 @@
-import { Pill } from './Pill'
+import { Link, useLocation } from 'react-router-dom'
 import './TopNav.css'
 
 export function TopNav() {
+  const { pathname } = useLocation()
+
+  const links = [
+    { to: '/vendors', label: 'Vendors' },
+    { to: '/contracts', label: 'Contracts' },
+    { to: '/reporting', label: 'Reporting' },
+  ]
+
   return (
     <header className="top-nav">
-      <div className="brand">Ledger.</div>
+      <Link to="/" className="brand">Ledger.</Link>
       <nav>
-        <a href="#">Vendors</a>
-        <a href="#">Contracts</a>
-        <a href="#">Reporting</a>
+        {links.map(({ to, label }) => (
+          <Link
+            key={to}
+            to={to}
+            className={pathname.startsWith(to) ? 'active' : ''}
+          >
+            {label}
+          </Link>
+        ))}
       </nav>
       <div className="actions">
-        <Pill>Settings</Pill>
+        <Link to="/settings" className="pill">Settings</Link>
       </div>
     </header>
   )

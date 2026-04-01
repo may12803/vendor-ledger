@@ -3,3 +3,22 @@ main {
   display: flex;
   flex-direction: column;
 }
+
+.loading-state {
+  padding: var(--spacing-xl);
+  text-align: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.empty-state {
+  padding: var(--spacing-xl);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-family: var(--font-serif);
+  color: var(--text-muted);
+}

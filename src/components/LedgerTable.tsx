@@ -6,13 +6,14 @@ import './LedgerTable.css'
 interface LedgerTableProps {
   vendors: VendorWithCredentials[]
   onEdit: (vendor: VendorWithCredentials) => void
+  onNavigate?: (id: string) => void
 }
 
 function formatCurrency(amount: number) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount)
 }
 
-export function LedgerTable({ vendors, onEdit }: LedgerTableProps) {
+export function LedgerTable({ vendors, onEdit, onNavigate }: LedgerTableProps) {
   return (
     <section className="ledger-container">
       <div className="ledger-header">
@@ -27,7 +28,15 @@ export function LedgerTable({ vendors, onEdit }: LedgerTableProps) {
       {vendors.map((vendor) => (
         <div className="ledger-row" key={vendor.id}>
           <div className="col-vendor">
-            <div className="vendor-name">{vendor.name}</div>
+            <div
+              className="vendor-name clickable"
+              onClick={() => onNavigate?.(vendor.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && onNavigate?.(vendor.id)}
+            >
+              {vendor.name}
+            </div>
             <div>
               <PillTag variant={vendor.category_variant}>{vendor.category}</PillTag>
             </div>

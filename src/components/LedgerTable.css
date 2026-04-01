@@ -36,6 +36,17 @@
   line-height: 1.1;
 }
 
+.vendor-name.clickable {
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+  display: inline;
+}
+
+.vendor-name.clickable:hover {
+  border-color: var(--text-main);
+}
+
 .col-contact,
 .col-auth,
 .col-billing {

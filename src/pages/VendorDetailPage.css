@@ -1,0 +1,254 @@
+.vendor-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-hero {
+  background-color: var(--accent-color);
+  border-bottom: var(--border-style);
+  padding: var(--spacing-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.detail-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.back-link {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-main);
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.back-link:hover {
+  opacity: 1;
+}
+
+.detail-name {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+  margin: var(--spacing-sm) 0;
+}
+
+.detail-hero-right {
+  display: flex;
+  gap: 4rem;
+  padding-bottom: 0.5rem;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: var(--border-style);
+}
+
+.detail-card {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-bottom: var(--border-style);
+  border-right: var(--border-style);
+}
+
+.detail-card:nth-child(2n) {
+  border-right: none;
+}
+
+.detail-card.span-2 {
+  grid-column: 1 / -1;
+  border-right: none;
+  border-bottom: none;
+}
+
+.card-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  margin-bottom: var(--spacing-md);
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.card-row:last-child {
+  border-bottom: none;
+}
+
+.card-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.card-value {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--text-main);
+}
+
+.card-value.serif {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+}
+
+.card-value.mono {
+  font-family: monospace;
+  letter-spacing: 0.02em;
+}
+
+.card-value.link {
+  text-decoration: none;
+  border-bottom: 1px solid var(--text-muted);
+  transition: border-color 0.2s;
+}
+
+.card-value.link:hover {
+  border-color: var(--text-main);
+}
+
+.card-value.muted {
+  color: var(--text-muted);
+}
+
+.card-empty {
+  font-style: italic;
+  font-family: var(--font-serif);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Contracts Section */
+.detail-section {
+  padding: var(--spacing-xl);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 400;
+}
+
+.contracts-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.contract-row {
+  display: grid;
+  grid-template-columns: 12px 2fr 80px 1.2fr 1fr;
+  gap: var(--spacing-lg);
+  align-items: center;
+  padding: var(--spacing-md) 0;
+  border-bottom: var(--border-style);
+  transition: background-color 0.2s;
+}
+
+.contract-row:hover {
+  background-color: rgba(212, 255, 0, 0.1);
+}
+
+.contract-row:last-child {
+  border-bottom: none;
+}
+
+.contract-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--text-main);
+  flex-shrink: 0;
+}
+
+.contract-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contract-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+}
+
+.contract-desc {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.contract-meta .label-micro {
+  text-transform: uppercase;
+}
+
+.contract-dates {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contract-value {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: right;
+}
+
+.empty-card {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--text-muted);
+  padding: var(--spacing-lg);
+  border: var(--border-style);
+  text-align: center;
+}
+
+.loading-state {
+  padding: var(--spacing-xl);
+  text-align: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.empty-state {
+  padding: var(--spacing-xl);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-family: var(--font-serif);
+  color: var(--text-muted);
+}
