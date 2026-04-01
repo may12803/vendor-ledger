@@ -1,36 +1,18 @@
 import { Pill, PillTag } from './Pill'
 import { PasswordField } from './PasswordField'
+import type { VendorWithCredentials } from '../types/database'
 import './LedgerTable.css'
 
-export interface Credential {
-  label: string
-  value: string
-  isPassword?: boolean
-  maskLength?: number
-}
-
-export interface Vendor {
-  name: string
-  category: string
-  categoryVariant: 'filled' | 'outline'
-  contact: {
-    name: string
-    email: string
-    phone?: string
-  }
-  credentials: Credential[]
-  billing: {
-    cycle: string
-    renewalNote?: string
-  }
-  monthlyCost: string
-}
-
 interface LedgerTableProps {
-  vendors: Vendor[]
+  vendors: VendorWithCredentials[]
+  onEdit: (vendor: VendorWithCredentials) => void
 }
 
-export function LedgerTable({ vendors }: LedgerTableProps) {
+function formatCurrency(amount: number) {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount)
+}
+
+export function LedgerTable({ vendors, onEdit }: LedgerTableProps) {
   return (
     <section className="ledger-container">
       <div className="ledger-header">
@@ -43,28 +25,28 @@ export function LedgerTable({ vendors }: LedgerTableProps) {
       </div>
 
       {vendors.map((vendor) => (
-        <div className="ledger-row" key={vendor.name}>
+        <div className="ledger-row" key={vendor.id}>
           <div className="col-vendor">
             <div className="vendor-name">{vendor.name}</div>
             <div>
-              <PillTag variant={vendor.categoryVariant}>{vendor.category}</PillTag>
+              <PillTag variant={vendor.category_variant}>{vendor.category}</PillTag>
             </div>
           </div>
 
           <div className="col-contact">
-            <span className="data-value serif-val">{vendor.contact.name}</span>
-            <span className="data-value muted">{vendor.contact.email}</span>
-            {vendor.contact.phone && (
-              <span className="data-value muted">{vendor.contact.phone}</span>
+            <span className="data-value serif-val">{vendor.contact_name}</span>
+            <span className="data-value muted">{vendor.contact_email}</span>
+            {vendor.contact_phone && (
+              <span className="data-value muted">{vendor.contact_phone}</span>
             )}
           </div>
 
           <div className="col-auth">
             {vendor.credentials.map((cred) => (
-              <div className="auth-block" key={cred.label}>
+              <div className="auth-block" key={cred.id}>
                 <span className="auth-label">{cred.label}</span>
-                {cred.isPassword ? (
-                  <PasswordField value={cred.value} maskLength={cred.maskLength} />
+                {cred.is_password ? (
+                  <PasswordField value={cred.value} maskLength={cred.mask_length ?? 12} />
                 ) : (
                   <span className="data-value">{cred.value}</span>
                 )}
@@ -73,18 +55,18 @@ export function LedgerTable({ vendors }: LedgerTableProps) {
           </div>
 
           <div className="col-billing">
-            <span className="data-value">{vendor.billing.cycle}</span>
-            {vendor.billing.renewalNote && (
-              <span className="data-value muted small">{vendor.billing.renewalNote}</span>
+            <span className="data-value">{vendor.billing_cycle}</span>
+            {vendor.renewal_note && (
+              <span className="data-value muted small">{vendor.renewal_note}</span>
             )}
           </div>
 
           <div className="col-cost">
-            <span className="data-value serif-val">{vendor.monthlyCost}</span>
+            <span className="data-value serif-val">{formatCurrency(Number(vendor.monthly_cost))}</span>
           </div>
 
           <div className="col-actions">
-            <Pill>Edit</Pill>
+            <Pill onClick={() => onEdit(vendor)}>Edit</Pill>
           </div>
         </div>
       ))}
