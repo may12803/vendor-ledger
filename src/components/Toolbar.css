@@ -1,0 +1,30 @@
+.toolbar {
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-bottom: var(--border-style);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 300px;
+}
+
+.search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: var(--border-style);
+  padding: var(--spacing-sm) 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--text-main);
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+  font-family: var(--font-serif);
+}
