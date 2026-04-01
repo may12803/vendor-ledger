@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import type { VendorWithCredentials } from '../types/database'
+import type { VendorWithCredentials, VendorInsert, CredentialInsert } from '../types/database'
 import './VendorModal.css'
 
 interface CredentialForm {
@@ -39,20 +39,7 @@ interface VendorModalProps {
   open: boolean
   vendor?: VendorWithCredentials | null
   onClose: () => void
-  onSave: (
-    vendor: {
-      name: string
-      category: string
-      category_variant: 'filled' | 'outline'
-      contact_name: string
-      contact_email: string
-      contact_phone: string | null
-      billing_cycle: string
-      renewal_note: string | null
-      monthly_cost: number
-    },
-    credentials: Omit<CredentialForm, 'mask_length'> & { mask_length: number | null }[]
-  ) => Promise<void>
+  onSave: (vendor: VendorInsert, credentials: CredentialInsert[]) => Promise<void>
   onDelete?: () => Promise<void>
 }
 

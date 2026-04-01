@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
-import type { VendorWithCredentials, VendorInsert, CredentialInsert } from '../types/database'
+import type { Vendor, Credential, VendorWithCredentials, VendorInsert, CredentialInsert } from '../types/database'
 
 export function useVendors() {
   const [vendors, setVendors] = useState<VendorWithCredentials[]>([])
@@ -32,9 +32,12 @@ export function useVendors() {
       return
     }
 
-    const combined: VendorWithCredentials[] = (vendorRows ?? []).map((v) => ({
+    const vRows = vendorRows as Vendor[]
+    const cRows = credRows as Credential[]
+
+    const combined: VendorWithCredentials[] = vRows.map((v) => ({
       ...v,
-      credentials: (credRows ?? []).filter((c) => c.vendor_id === v.id),
+      credentials: cRows.filter((c) => c.vendor_id === v.id),
     }))
 
     setVendors(combined)
@@ -45,10 +48,7 @@ export function useVendors() {
     fetchVendors()
   }, [fetchVendors])
 
-  const addVendor = async (
-    vendor: VendorInsert,
-    credentials: Omit<CredentialInsert, 'vendor_id'>[]
-  ) => {
+  const addVendor = async (vendor: VendorInsert, credentials: CredentialInsert[]) => {
     const { data, error: insertErr } = await supabase
       .from('vendors')
       .insert(vendor)
@@ -57,21 +57,19 @@ export function useVendors() {
 
     if (insertErr || !data) throw new Error(insertErr?.message ?? 'Failed to create vendor')
 
+    const newVendor = data as Vendor
+
     if (credentials.length > 0) {
-      const creds = credentials.map((c) => ({ ...c, vendor_id: data.id }))
+      const creds = credentials.map((c) => ({ ...c, vendor_id: newVendor.id }))
       const { error: credErr } = await supabase.from('credentials').insert(creds)
       if (credErr) throw new Error(credErr.message)
     }
 
     await fetchVendors()
-    return data
+    return newVendor
   }
 
-  const updateVendor = async (
-    id: string,
-    vendor: Partial<VendorInsert>,
-    credentials: Omit<CredentialInsert, 'vendor_id'>[]
-  ) => {
+  const updateVendor = async (id: string, vendor: Partial<VendorInsert>, credentials: CredentialInsert[]) => {
     const { error: updateErr } = await supabase
       .from('vendors')
       .update(vendor)
@@ -79,7 +77,6 @@ export function useVendors() {
 
     if (updateErr) throw new Error(updateErr.message)
 
-    // Replace all credentials
     await supabase.from('credentials').delete().eq('vendor_id', id)
     if (credentials.length > 0) {
       const creds = credentials.map((c) => ({ ...c, vendor_id: id }))
